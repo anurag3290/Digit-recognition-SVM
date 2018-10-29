@@ -1,0 +1,29 @@
+Business Understanding
+A classic problem in the field of pattern recognition is that of handwritten digit recognition. Suppose that you have an image of a digit submitted by a user via a scanner, a tablet, or other digital devices. The goal is to develop a model that can correctly identify the digit (between 0-9) written in an image. 
+ 
+Objective
+You are required to develop a model using Support Vector Machine which should correctly classify the handwritten digits based on the pixel values given as features.
+ 
+Results Expected
+Write all your code in one well-commented R file; briefly, mention the insights and observations from the analysis.
+You need to submit the only the R commented file. It should include detailed comments and should not contain unnecessary pieces of code.
+
+Note:
+It would take a lot of time for modeling on the full MNIST data, So you can sample the data and build the model which would make the computation faster.
+ 
+Packages required (Suggested):
+install.packages(“caret”)
+install.packages(“kernlab”)
+install.packages(“dplyr”)
+install.packages(“readr”)
+install.packages(“ggplot2”)
+install.packages(“gridExtra”)
+
+Note: Slight correction in the solution 
+While tuning the SVM hyperparameters (cost C and sigma) using the train() function, as used in this video, the hyperparameters thus returned may result in low accuracy. To avoid that, you can use an alternative for the train() function, tune.svm().  The code below shows the improved solution:
+
+# results in low accuracy
+fit.svm <- train(label~., data=mnistTrain, method="svmRadial", metric=metric,  tuneGrid=grid, trControl=trainControl)
+
+# results in high accuracy
+fit.svm <- tune.svm(label~., data=mnistTrain, gamma = c(0.015 ,0.025, 0.05), cost = c(0.1,0.5,1,2))
